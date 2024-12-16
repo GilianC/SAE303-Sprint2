@@ -1,7 +1,7 @@
 import * as L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import { HeaderView } from "./ui/header/index.js";
-import { Ite4} from "./ui/ite-4/index.js";
+import { Ite5} from "./ui/ite-5/index.js";
 import { Candidats } from "./data/data-candidats.js";
 import { Lycees } from "./data/data-lycees.js";
 
@@ -13,9 +13,9 @@ let C = {};
 
 C.init = async function(){
     V.init();
-    console.log(Candidats.getAll());
-    console.log(Lycees.getAll());
-    console.log(Lycees.getLycee());
+    // console.log(Candidats.getAll());
+    // console.log(Lycees.getAll());
+    // console.log(Lycees.getLycee());
 }
 
 let V = {
@@ -25,7 +25,8 @@ let V = {
 V.init = function(){
     V.renderHeader();
     // V.renderMap();
-    V.renderLycee();
+    // V.renderLycee();
+    V.renderLyceeByCandidate();
     
 }
 
@@ -37,9 +38,16 @@ V.renderHeader= function(){
 //         V.renderLycee(map);
 
 // }
-V.renderLycee= function(){
+// V.renderLycee= function(){
+//     let data = Lycees.getLycee();
+//     Ite4.render(data);
+
+// }
+V.renderLyceeByCandidate= function(){
     let data = Lycees.getLycee();
-    Ite4.render(data);
+    let cand = Candidats.getLycee();
+    Ite5.render(data,cand );
+    console.log()
 
 }
 C.init();

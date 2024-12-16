@@ -8,15 +8,28 @@ let Lycees = {}
 Lycees.getAll = function(){ 
     return data;
 }
+// Lycees.getLycee= function(){
+//     let res = [];
+//     for (let obj of data) {
+//         let nom = obj.appellation_officielle;
+//         // console.log(nom);
+//             let lat = parseFloat(obj.latitude);
+//             let long = parseFloat(obj.longitude);
+//             res.push([lat, long, nom]);
+//     }
+// console.log(res);
+// return res;
 Lycees.getLycee= function(){
     let res = [];
-    for(let obj of data){
-        let lat = parseFloat(obj.latitude);
-        let long = parseFloat(obj.longitude);
-        res.push([lat, long])
+    for (let obj of data) {
+        let num = obj.numero_uai;
+        // console.log(nom);
+            let lat = parseFloat(obj.latitude);
+            let long = parseFloat(obj.longitude);
+            res.push([lat, long, num]);
     }
-    // Assuming you have a map object initialized
-   
-    return res;
+console.log(res);
+return res;
+
 }
 export { Lycees };
