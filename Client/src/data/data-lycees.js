@@ -9,7 +9,14 @@ Lycees.getAll = function(){
     return data;
 }
 Lycees.getLycee= function(){
-    console.log(data.appellation_officielle);
-    return data[2].appellation_officielle;
+    let res = [];
+    for(let obj of data){
+        let lat = parseFloat(obj.latitude);
+        let long = parseFloat(obj.longitude);
+        res.push([lat, long])
+    }
+    // Assuming you have a map object initialized
+   
+    return res;
 }
 export { Lycees };

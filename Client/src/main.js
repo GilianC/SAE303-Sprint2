@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import { HeaderView } from "./ui/header/index.js";
+import { Ite4} from "./ui/ite-4/index.js";
 import { Candidats } from "./data/data-candidats.js";
 import { Lycees } from "./data/data-lycees.js";
 
@@ -23,51 +24,22 @@ let V = {
 
 V.init = function(){
     V.renderHeader();
-    V.renderMap();
+    // V.renderMap();
+    V.renderLycee();
+    
 }
 
 V.renderHeader= function(){
     V.header.innerHTML = HeaderView.render();
 }
-V.renderMap= function(){
-    var map = L.map('map').setView([45.835783764063905, 1.2311845477920846], 13);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 25,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-        var marker = L.marker([45.835783764063905, 1.2311845477920846]).addTo(map);
-        var circle = L.circle([45.835783764063905, 1.2311845477920846], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: 500
-        }).addTo(map);
-        console.log(circle);
-//         var polygon = L.polygon([
-//     [51.509, -0.08],
-//     [51.503, -0.06],
-//     [51.51, -0.047]
-// ]).addTo(map);
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-circle.bindPopup("I am a circle.");
-// polygon.bindPopup("I am a polygon.");
-var popup = L.popup()
-    .setLatLng([45.835783764063905, 1.2311845477920846])
-    .setContent("I am a standalone popup.")
-    .openOn(map);
-    var popup = L.popup();
+// V.renderMap= function(){
+   
+//         V.renderLycee(map);
 
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(map);
-    }
-    
-    map.on('click', onMapClick);
-}
+// }
 V.renderLycee= function(){
+    let data = Lycees.getLycee();
+    Ite4.render(data);
 
-    var markerLycee = L.marker([45.835783764063905, 1.2311845477920846]).addTo(map);
 }
 C.init();
