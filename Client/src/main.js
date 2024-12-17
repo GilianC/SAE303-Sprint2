@@ -1,4 +1,5 @@
 import * as L from "leaflet";
+import 'leaflet.markercluster';
 import 'leaflet/dist/leaflet.css';
 import { HeaderView } from "./ui/header/index.js";
 import { Ite5} from "./ui/ite-5/index.js";
@@ -24,10 +25,11 @@ let V = {
 
 V.init = function(){
     V.renderHeader();
+
     // V.renderMap();
     // V.renderLycee();
     V.renderLyceeByCandidate();
-    
+
 }
 
 V.renderHeader= function(){
