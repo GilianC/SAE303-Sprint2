@@ -57,26 +57,40 @@ console.log(data);
 //fais la fonction getLycee qui retourne les lycées avec leur latitude et longitude selon leur présence dans la liste des candidats en utilisant getDiplomeEnPreparation de data-candidats.js
 
 Lycees.getLycee = function() {
-let res = [];
-let candidats = Candidats.getDiplomeEnPreparation();
-candidats.forEach(candidat => {
-    let index = Lycees.binarySearch(candidat.Scolarite[0].UAIEtablissementorigine);
-    if (index !== null) {
-        let obj = data[index];
-        let num = obj.numero_uai;
-        let nom = obj.appellation_officielle;
-        let lat = parseFloat(obj.latitude);
-        let long = parseFloat(obj.longitude);
-        if (lat != null && long != null && !isNaN(lat) && !isNaN(long)) {
-            let alreadyExists = res.some(item => item[2] === num);
-            if (!alreadyExists) {
-                res.push([lat, long, num, nom]);
+    let res = [];
+    let candidats = Candidats.getDiplomeEnPreparation();
+    candidats.forEach(candidat => {
+        let index = Lycees.binarySearch(candidat.Scolarite[0].UAIEtablissementorigine);
+        if (index !== null) {
+            let obj = data[index];
+            let num = obj.numero_uai;
+            let nom = obj.appellation_officielle;
+            let lat = parseFloat(obj.latitude);
+            let long = parseFloat(obj.longitude);
+            if (lat != null && long != null && !isNaN(lat) && !isNaN(long)) {
+                let alreadyExists = res.some(item => item[2] === num);
+                let count = Lycees.getNbEleveLycee(num);
+                if (!alreadyExists) {
+                    
+                    res.push([lat, long, num, nom, count]);
+                }
+
             }
         }
-    }
-});
-console.log(res);
+    });
     return res;
-
 }
+
+Lycees.getNbEleveLycee = function(uai) {
+    let count = 0;
+    let candidats = Candidats.getDiplomeEnPreparation();
+    candidats.forEach(candidat => {
+        if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
+            count++;
+        }
+    });
+    return count;
+}
+
+// getNbEleveLycee doit faire un compteur qui compte le nombre d'élèves dans chaque lycée 
 export { Lycees };

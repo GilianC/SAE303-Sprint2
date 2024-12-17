@@ -18,7 +18,7 @@ Ite5.render = function(lycee){
                 // console.log(obj[2]);
 
                 res.push(obj[2]);
-                L.marker([obj[0], obj[1]]).addTo(map).bindPopup(obj[3] + " avec "   );
+                L.marker([obj[0], obj[1]]).addTo(map).bindPopup(obj[3] + " avec "+ obj[4] + " élèves");
 
             
         }

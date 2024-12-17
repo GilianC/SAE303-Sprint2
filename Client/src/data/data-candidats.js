@@ -48,7 +48,7 @@ Candidats.getDiplomeEnPreparation = function() {
             res.push(obj);
         }
     }
-    console.log(res);
+    // console.log(res);
     return res;
 }
 
