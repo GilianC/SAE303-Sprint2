@@ -19,7 +19,7 @@ Ite5.render = function(lycee, candidate){
                 // console.log(obj[2]);
                 // console.log(candidate[i]);
                 res.push(obj[2]);
-                L.marker([obj[0], obj[1]]).addTo(map).bindPopup('Lycée présent dans les deux listes');
+                L.marker([obj[0], obj[1]]).addTo(map).bindPopup(obj[3] + "avec" );
             }
         }
     }

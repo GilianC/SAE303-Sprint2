@@ -19,14 +19,16 @@ Lycees.getAll = function(){
 //     }
 // console.log(res);
 // return res;
+
 Lycees.getLycee= function(){
     let res = [];
     for (let obj of data) {
         let num = obj.numero_uai;
+        let nom = obj.appellation_officielle;
         // console.log(nom);
             let lat = parseFloat(obj.latitude);
             let long = parseFloat(obj.longitude);
-            res.push([lat, long, num]);
+            res.push([lat, long, num, nom]);
     }
 console.log(res);
 return res;
