@@ -44,9 +44,8 @@ V.renderHeader= function(){
 
 // }
 V.renderLyceeByCandidate= function(){
-    let data = Lycees.getLycee();
-    let cand = Candidats.getLycee();
-    Ite5.render(data,cand );
+    let cand = Lycees.getLycee();
+    Ite5.render(cand );
     console.log()
 
 }
