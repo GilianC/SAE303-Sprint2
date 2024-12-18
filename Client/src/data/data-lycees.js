@@ -78,16 +78,17 @@ Lycees.getLycee = function() {
 // }
 Lycees.getNbEleveSpe = function(uai) {
     let count = 0;
-    let specialities = {};
+    let specialities = { STI2D: 0, Generale: 0, autre: 0 };
     let candidats = Candidats.getDiplomeEnPreparation();
     candidats.forEach(candidat => {
         if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
             count++;
             let speciality = candidat.Baccalaureat.SerieDiplomeCode;
-            if (!specialities[speciality]) {
-                specialities[speciality] = 0;
+            if (speciality === 'STI2D' || speciality === 'Generale') {
+                specialities[speciality]++;
+            } else {
+                specialities['autre']++;
             }
-            specialities[speciality]++;
         }
     });
     console.log(specialities);
