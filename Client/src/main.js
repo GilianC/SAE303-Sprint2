@@ -2,7 +2,7 @@ import * as L from "leaflet";
 import 'leaflet.markercluster';
 import 'leaflet/dist/leaflet.css';
 import { HeaderView } from "./ui/header/index.js";
-import { Ite5} from "./ui/ite-5/index.js";
+import { MapView} from "./ui/Map/index.js";
 import { Candidats } from "./data/data-candidats.js";
 import { Lycees } from "./data/data-lycees.js";
 
@@ -33,9 +33,9 @@ V.renderHeader= function(){
 }
 
 V.renderLyceeByCandidate= function(){
-    let result = Lycees.getLycee();
+    let result = Candidats.getLycee();
 
-    Ite5.render(result);
+    MapView.render(result);
     console.log(result);
 
 }

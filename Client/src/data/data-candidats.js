@@ -3,6 +3,7 @@
 let data = await fetch("./src/data/json/candidatures.json");
 data = await data.json();
 
+import { Lycees } from "./data-lycees.js";
 
 let compare = function(a, b) {
     if (a.UAIEtablissementorigine < b.UAIEtablissementorigine) {
@@ -37,8 +38,7 @@ Candidats.binarySearch = function(UAIEtablissementorigine) {
         }
         return null;
     }
-
-
+  
   
 Candidats.getDiplomeEnPreparation = function() {
     let res = [];
@@ -51,6 +51,7 @@ Candidats.getDiplomeEnPreparation = function() {
 
     return res;
 }
+
 
 
 
@@ -70,8 +71,49 @@ Candidats.getByDiplome = function(diplome) {
 
 }
 
+Candidats.getNbEleveSpe = function(uai) {
+    let count = 0;
+    let specialities = { STI2D: 0, Générale: 0, autres: 0 };
+    let candidats = Candidats.getDiplomeEnPreparation();
+    candidats.forEach(candidat => {
+        if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
+            count++;
+            let speciality = candidat.Baccalaureat.SerieDiplomeCode;
+            if (speciality === "STI2D" || speciality === "Générale") {
+                specialities[speciality]++;
+            } else {
+                specialities.autres++;
+            }
+        }
+    });
+    console.log(specialities);
+    return { count, specialities };
+}
+Candidats.getLycee = function() {
+    let res = [];
+    let candidats = Candidats.getDiplomeEnPreparation();
+    candidats.forEach(candidat => {
+        let lyceesData = Lycees.getAll();
+        let index = Lycees.binarySearch(candidat.Scolarite[0].UAIEtablissementorigine);
+        if (index !== null) {
+            let obj = lyceesData[index];
+            let num = obj.numero_uai;
+            let nom = obj.appellation_officielle;
+            let lat = parseFloat(obj.latitude);
+            let long = parseFloat(obj.longitude);
+            if (lat != null && long != null && !isNaN(lat) && !isNaN(long)) {
+                let alreadyExists = res.some(item => item[2] === num);
+                let count = Candidats.getNbEleveSpe(num);
+                if (!alreadyExists) {
+                    
+                    res.push([lat, long, num, nom, count]);
+                }
 
-
+            }
+        }
+    });
+    return res;
+}
 
 
 export { Candidats };

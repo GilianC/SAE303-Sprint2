@@ -1,8 +1,8 @@
 
 
-let Ite5 = {};
+let MapView = {};
 
-Ite5.render = function (lycee) {
+MapView.render = function (lycee) {
   
     var map = L.map('map').setView([45.835783764063905, 1.2311845477920846], 6);
 
@@ -44,13 +44,26 @@ markers.on('clusterclick', function (event) {
         const cluster = event.layer;
 
 
-        // const totalcandidat = cluster.getAllChildMarkers().reduce((sum, marker) => sum + (marker.candidat || 0), 0);
+        const totalcandidat = cluster.getAllChildMarkers().reduce((sum, marker) => sum + (marker.candidat || 0), 0);
+        const specialitiesCount = cluster.getAllChildMarkers().reduce((acc, marker) => {
+            Object.entries(marker.candidat.specialities).forEach(([speciality, count]) => {
+            if (!acc[speciality]) {
+                acc[speciality] = 0;
+            }
+            acc[speciality] += count;
+            });
+            return acc;
+        }, {});
+
+        const specialitiesString = Object.entries(specialitiesCount)
+            .map(([speciality, count]) => `${speciality}: ${count}`)
+            .join('<br>');
 
 
 
     L.popup()
         .setLatLng(cluster.getLatLng())
-        .setContent("Nombre total d'élèves dans ce secteur : " )
+        .setContent("Nombre total d'élèves dans ce secteur : " + specialitiesString +"</br>" )
         .openOn(map);
     });
 
@@ -59,4 +72,4 @@ markers.on('clusterclick', function (event) {
 };
 
 
-export {Ite5};
+export {MapView};
