@@ -66,8 +66,6 @@ markers.on('clusterclick', function (event) {
         .setContent("Nombre total d'élèves dans ce secteur : " + specialitiesString +"</br>" )
         .openOn(map);
     });
-
-   
     map.addLayer(markers);
 };
 
