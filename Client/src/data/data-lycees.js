@@ -40,21 +40,6 @@ Lycees.binarySearch = function(numero_uai){
 }
 
 console.log(data);
-// Lycees.getLycee= function(){
-//     let res = [];
-//     for (let obj of data) {
-//         let num = obj.numero_uai;
-//         let nom = obj.appellation_officielle;
-//         // console.log(nom);
-//             let lat = parseFloat(obj.latitude);
-//             let long = parseFloat(obj.longitude);
-//             res.push([lat, long, num, nom]);
-//     }
-// console.log(res);
-// return res;
-
-// }
-//fais la fonction getLycee qui retourne les lycées avec leur latitude et longitude selon leur présence dans la liste des candidats en utilisant getDiplomeEnPreparation de data-candidats.js
 
 Lycees.getLycee = function() {
     let res = [];
@@ -69,7 +54,7 @@ Lycees.getLycee = function() {
             let long = parseFloat(obj.longitude);
             if (lat != null && long != null && !isNaN(lat) && !isNaN(long)) {
                 let alreadyExists = res.some(item => item[2] === num);
-                let count = Lycees.getNbEleveLycee(num);
+                let count = Lycees.getNbEleveSpe(num);
                 if (!alreadyExists) {
                     
                     res.push([lat, long, num, nom, count]);
@@ -81,16 +66,32 @@ Lycees.getLycee = function() {
     return res;
 }
 
-Lycees.getNbEleveLycee = function(uai) {
+// Lycees.getNbEleveLycee = function(uai) {
+//     let count = 0;
+//     let candidats = Candidats.getDiplomeEnPreparation();
+//     candidats.forEach(candidat => {
+//         if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
+//             count++;
+//         }
+//     });
+//     return count;
+// }
+Lycees.getNbEleveSpe = function(uai) {
     let count = 0;
+    let specialities = {};
     let candidats = Candidats.getDiplomeEnPreparation();
     candidats.forEach(candidat => {
         if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
             count++;
+            let speciality = candidat.Baccalaureat.SerieDiplomeCode;
+            if (!specialities[speciality]) {
+                specialities[speciality] = 0;
+            }
+            specialities[speciality]++;
         }
     });
-    return count;
+    console.log(specialities);
+    return { count, specialities };
 }
 
-// getNbEleveLycee doit faire un compteur qui compte le nombre d'élèves dans chaque lycée 
 export { Lycees };

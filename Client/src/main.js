@@ -14,9 +14,7 @@ let C = {};
 
 C.init = async function(){
     V.init();
-    // console.log(Candidats.getAll());
-    // console.log(Lycees.getAll());
-    // console.log(Lycees.getLycee());
+
 }
 
 let V = {
@@ -26,8 +24,6 @@ let V = {
 V.init = function(){
     V.renderHeader();
 
-    // V.renderMap();
-    // V.renderLycee();
     V.renderLyceeByCandidate();
 
 }
@@ -35,16 +31,7 @@ V.init = function(){
 V.renderHeader= function(){
     V.header.innerHTML = HeaderView.render();
 }
-// V.renderMap= function(){
-   
-//         V.renderLycee(map);
 
-// }
-// V.renderLycee= function(){
-//     let data = Lycees.getLycee();
-//     Ite4.render(data);
-
-// }
 V.renderLyceeByCandidate= function(){
     let result = Lycees.getLycee();
 
