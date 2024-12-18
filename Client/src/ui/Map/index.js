@@ -2,7 +2,7 @@
 
 let MapView = {};
 
-MapView.render = function (lycee) {
+MapView.render = function (listcandidate) {
   
     var map = L.map('map').setView([45.835783764063905, 1.2311845477920846], 6);
 
@@ -29,11 +29,12 @@ MapView.render = function (lycee) {
     });
 
 
-    lycee.forEach(function (item) {
+    listcandidate.forEach(function (item) {
         const [lat, lng,num ,name, candidat ] = item; 
+        console.log(candidat);
         const specialities = Object.entries(candidat.specialities);
         const specialitiesString = specialities.map(speciality => `${speciality[0]}: ${speciality[1]}`).join('<br>');  
-        console.log(specialitiesString);
+        // console.log(specialitiesString);
         const marker = L.marker([lat, lng])
             .bindPopup(name + " avec : " + candidat.count + " candidat(s)" + "<br>" + specialitiesString + "<br>");  
         marker.candidat = candidat; 
