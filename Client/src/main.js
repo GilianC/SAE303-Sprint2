@@ -6,6 +6,7 @@ import { MapView} from "./ui/Map/index.js";
 import { Candidats } from "./data/data-candidats.js";
 import { Lycees } from "./data/data-lycees.js";
 
+import { GraphView } from "./ui/Graph/index.js";
 import './index.css';
 
 
@@ -18,33 +19,36 @@ C.init = async function(){
     C.setupEventListeners();
 }
 
-// C.init = async function(){
-//     V.init();
 
-// }
 
 let V = {
-    header: document.querySelector("#header")
+    header: document.querySelector("#header"),
+    graph: document.querySelector("#graph")
+    
 };
 
 V.init = function(){
     V.renderHeader();
     Candidats.getDiplomeAcquis();
     // V.renderLyceeByCandidate();
-    console.log(Candidats.getNbEleveSpe('0870669E'));
+
 
 }
 
 V.renderHeader= function(){
     V.header.innerHTML = HeaderView.render();
 }
-
+V.renderGraph = function(){
+    document.querySelector("#graph").innerHTML = GraphView.render();
+    // V.graph.innerHTML = GraphView.render();
+}
 V.resetMap = function() {
     let mapContainer = document.getElementById('map');
-    mapContainer.remove(); // Remove the map container
-    let newMapContainer = document.createElement('div'); // Create a new map container
-    newMapContainer.id = 'map'; // Set the id to 'map'
-    document.body.appendChild(newMapContainer); // Append the new map container to the body
+    mapContainer.remove();
+    let newMapContainer = document.createElement('div'); 
+    newMapContainer.id = 'map';
+    let box = document.querySelector("#boxC");
+    box.appendChild(newMapContainer);
 }
 
 // V.renderLyceeByCandidate= function(){
@@ -61,6 +65,11 @@ C.setupEventListeners = function() {
         let resultNeo = Candidats.getNeoBach();
         console.log(resultNeo);
         MapView.render(resultNeo);
+        V.renderGraph();
+        Candidats.getLyceeToDepartement();
+        let chart = Candidats.getLyceeToDepartement();
+        GraphView.renderGraph(chart);
+        // console.log(Candidats.getChartForNeoBach());
     });
 
     document.querySelector("#btnAncienBachelier").addEventListener("click", function() {
