@@ -31,6 +31,7 @@ V.init = function(){
     V.renderHeader();
     Candidats.getDiplomeAcquis();
     // V.renderLyceeByCandidate();
+    V.renderMap();
 
 
 }
@@ -50,6 +51,10 @@ V.resetMap = function() {
     newMapContainer.id = 'map';
     let box = document.querySelector("#boxC");
     box.appendChild(newMapContainer);
+}
+V.renderMap = function(){
+    let resultNeo = Candidats.getNeoBach();
+    MapView.render(resultNeo);
 }
 
 // V.renderLyceeByCandidate= function(){
