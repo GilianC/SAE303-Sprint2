@@ -77,8 +77,11 @@ C.setupEventListeners = function() {
         let resultAncien = Candidats.getAncienBach();
         MapView.render(resultAncien);
         console.log(resultAncien);
+        V.renderGraph();
+        Candidats.getLyceeToDepartement();
+        let chart = Candidats.getDepartementPostBac();
+        GraphView.renderGraph(chart);
     });
-
     document.querySelector("#btnTous").addEventListener("click", function() {
         let resultTous = Candidats.getTous();
         MapView.render(resultTous);
