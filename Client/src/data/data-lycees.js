@@ -43,16 +43,6 @@ console.log(data);
 
 
 
-// Lycees.getNbEleveLycee = function(uai) {
-//     let count = 0;
-//     let candidats = Candidats.getDiplomeEnPreparation();
-//     candidats.forEach(candidat => {
-//         if (candidat.Scolarite[0].UAIEtablissementorigine === uai) {
-//             count++;
-//         }
-//     });
-//     return count;
-// }
 
 
 export { Lycees };

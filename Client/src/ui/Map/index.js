@@ -33,7 +33,7 @@ MapView.render = function (listcandidate) {
 
         let specialities = Object.entries(candidat.specialities);
         let specialitiesName = specialities.map(speciality => `${speciality[0]}: ${speciality[1]}`).join('<br>');  
-        // console.log(specialitiesName);
+
         let marker = L.marker([lat, lng])
             .bindPopup(name + " avec : " + candidat.count + " candidat(s)" + "<br>" + specialitiesName + "<br>");  
         marker.candidat = candidat; 
@@ -43,8 +43,6 @@ MapView.render = function (listcandidate) {
 markers.on('clusterclick', function (event) {
         let cluster = event.layer;
 
-
-        // let totalcandidat = cluster.getAllChildMarkers().reduce((sum, marker) => sum + (marker.candidat || 0), 0);
         let specialitiesCount = cluster.getAllChildMarkers().reduce((acc, marker) => {
             Object.entries(marker.candidat.specialities).forEach(([speciality, count]) => {
             if (!acc[speciality]) {
@@ -58,8 +56,6 @@ markers.on('clusterclick', function (event) {
         let specialitiesName = Object.entries(specialitiesCount)
             .map(([speciality, count]) => `${speciality}: ${count}`)
             .join('<br>');
-
-
 
     L.popup()
         .setLatLng(cluster.getLatLng())

@@ -1,5 +1,3 @@
-
-
 let data = await fetch("./src/data/json/candidatures.json");
 let code = await fetch("./src/data/json/codepostaux.json");
 data = await data.json();
@@ -90,7 +88,6 @@ Candidats.getDiplomeAcquis = function() {
             res.push(obj);
         }
     }
-    // console.log(res);
     return res;
 }
 
@@ -131,8 +128,6 @@ Candidats.getNbElevePostBac = function(uai) {
     };
     return { count, specialities };
 }
-//getCodePostaux retourne les codes postaux
-
 
 Candidats.getAncienBach = function() {
 
@@ -190,30 +185,16 @@ Candidats.getNeoBach = function() {
     };
     return res;
 }
-//fonction qui récupére les données nécessaires pour le graphique donc : le nom du dpt, le nom de la spécialité et le nombre d'élèves dans cet spécialité
-// Candidats.getChartForNeoBach = function() {
-//     let res = [];
-//     let candidats = Candidats.getNeoBach();
-//     for (let candidat of candidats) {
-//         let specialities = Object.entries(candidat[4].specialities);
-//         for (let speciality of specialities) {
-//             let [name, count] = speciality;
-//             res.push([candidat[3], name, count]);
-//         }
-//     }
-//     return res;
 
-// }
 Candidats.getLyceeToDepartement = function() {
     let res = [];
-    let index = {}; // Index pour regrouper les candidats par département
-    let candidats = Candidats.getDiplomeEnPreparation(); // Récupérer les candidats
+    let index = {};
+    let candidats = Candidats.getDiplomeEnPreparation(); 
 
     for (let candidat of candidats) {
-        let cp = parseInt(candidat.Scolarite[0].CommuneEtablissementOrigineCodePostal); // Extraire le code postal
-        let dpt = cp.toString().slice(0, 2); // Obtenir le département à partir des 2 premiers chiffres
+        let cp = parseInt(candidat.Scolarite[0].CommuneEtablissementOrigineCodePostal); 
+        let dpt = cp.toString().slice(0, 2);
 
-        // Ajouter le candidat à l'index du département
         if (index[dpt] === undefined) {
             index[dpt] = {
                 candidats: [],
@@ -221,8 +202,6 @@ Candidats.getLyceeToDepartement = function() {
             };
         }
         index[dpt].candidats.push(candidat);
-
-        // Compter les spécialités
         let speciality = candidat.Baccalaureat.SerieDiplomeCode;
         if (speciality === "STI2D" || speciality === "Générale") {
             index[dpt].specialities[speciality]++;
@@ -230,38 +209,36 @@ Candidats.getLyceeToDepartement = function() {
             index[dpt].specialities.autres++;
         }
 
-        // Trouver les informations supplémentaires à partir de la liste `code`
-        let codeIndex = Candidats.binarySearchCode(cp); // Recherche binaire pour trouver le code postal dans la liste `code`
+        let codeIndex = Candidats.binarySearchCode(cp); 
         if (codeIndex !== null) {
             let codeObj = code[codeIndex];
-            let codeLat = parseFloat(codeObj.latitude); // Latitude
-            let codeLong = parseFloat(codeObj.longitude); // Longitude
-            let departement = codeObj.nom_departement; // Nom du département
-            let codePostal = codeObj.code_postal; // Code postal
+            let codeLat = parseFloat(codeObj.latitude);
+            let codeLong = parseFloat(codeObj.longitude);
+            let departement = codeObj.nom_departement;
+            let codePostal = codeObj.code_postal; 
 
             if (!isNaN(codeLat) && !isNaN(codeLong)) {
-                // Vérifier si le département est déjà dans le tableau de résultats
+
                 let alreadyExists = res.some(item => item[3] === departement);
                 if (!alreadyExists) {
-                    res.push([codeLat, codeLong, codePostal, departement, index[dpt].specialities]); // Ajouter les informations à `res`
+                    res.push([codeLat, codeLong, codePostal, departement, index[dpt].specialities]); 
                 }
             }
         }
     }
     res.sort((a, b) => b[5] - a[5]);
     console.log(res);
-    return res; // Retourner les résultats
+    return res; 
 };
 Candidats.getDepartementPostBac = function() {
     let res = [];
-    let index = {}; // Index pour regrouper les candidats par département
-    let candidats = Candidats.getDiplomeAcquis(); // Récupérer les candidats
+    let index = {}; 
+    let candidats = Candidats.getDiplomeAcquis();
 
     for (let candidat of candidats) {
-        let cp = parseInt(candidat.Scolarite[0].CommuneEtablissementOrigineCodePostal); // Extraire le code postal
-        let dpt = cp.toString().slice(0, 2); // Obtenir le département à partir des 2 premiers chiffres
+        let cp = parseInt(candidat.Scolarite[0].CommuneEtablissementOrigineCodePostal); 
+        let dpt = cp.toString().slice(0, 2); 
 
-        // Ajouter le candidat à l'index du département
         if (index[dpt] === undefined) {
             index[dpt] = {
                 candidats: [],
@@ -270,7 +247,6 @@ Candidats.getDepartementPostBac = function() {
         }
         index[dpt].candidats.push(candidat);
 
-        // Compter les spécialités
         let speciality = candidat.Baccalaureat.SerieDiplomeCode;
         if (speciality === "STI2D" || speciality === "Générale") {
             index[dpt].specialities[speciality]++;
@@ -278,17 +254,16 @@ Candidats.getDepartementPostBac = function() {
             index[dpt].specialities.autres++;
         }
 
-        // Trouver les informations supplémentaires à partir de la liste `code`
-        let codeIndex = Candidats.binarySearchCode(cp); // Recherche binaire pour trouver le code postal dans la liste `code`
+
+        let codeIndex = Candidats.binarySearchCode(cp); 
         if (codeIndex !== null) {
             let codeObj = code[codeIndex];
-            let codeLat = parseFloat(codeObj.latitude); // Latitude
-            let codeLong = parseFloat(codeObj.longitude); // Longitude
-            let departement = codeObj.nom_departement; // Nom du département
-            let codePostal = codeObj.code_postal; // Code postal
+            let codeLat = parseFloat(codeObj.latitude);
+            let codeLong = parseFloat(codeObj.longitude);
+            let departement = codeObj.nom_departement;
+            let codePostal = codeObj.code_postal; 
 
             if (!isNaN(codeLat) && !isNaN(codeLong)) {
-                // Vérifier si le département est déjà dans le tableau de résultats
                 let alreadyExists = res.some(item => item[3] === departement);
                 if (!alreadyExists) {
                     res.push([codeLat, codeLong, codePostal, departement, index[dpt].specialities, index[dpt].candidats.length]); // Ajouter les informations à `res` avec le nombre de candidats
@@ -296,12 +271,8 @@ Candidats.getDepartementPostBac = function() {
             }
         }
     }
-
-    // Trier par nombre total de candidats décroissant (indice 5, qui est le nombre de candidats dans chaque département)
-    res.sort((a, b) => b[5] - a[5]);
-
-    console.log(res); // Afficher les résultats dans la console
-    return res; // Retourner les résultats triés
+    console.log(res);
+    return res;
 };
 
 export { Candidats };
