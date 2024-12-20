@@ -7,7 +7,7 @@ MapView.render = function (listcandidate) {
     var map = L.map('map').setView([45.835783764063905, 1.2311845477920846], 6);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        minZoom: 1,
+
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 

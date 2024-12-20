@@ -41,6 +41,7 @@ V.renderHeader= function(){
 V.renderGraph = function(){
     document.querySelector("#graph").innerHTML = GraphView.render();
     // V.graph.innerHTML = GraphView.render();
+    
 }
 V.resetMap = function() {
     let mapContainer = document.getElementById('map');
@@ -70,6 +71,11 @@ C.setupEventListeners = function() {
         let chart = Candidats.getLyceeToDepartement();
         GraphView.renderGraph(chart);
         // console.log(Candidats.getChartForNeoBach());
+        document.querySelector('#slider-name').addEventListener('input', function(event) {
+            const threshold = event.target.value; 
+            document.getElementById('slider').innerText = threshold; 
+            GraphView.renderGraph(); 
+        });
     });
 
     document.querySelector("#btnAncienBachelier").addEventListener("click", function() {
@@ -87,6 +93,7 @@ C.setupEventListeners = function() {
         MapView.render(resultTous);
         console.log(resultTous);
     });
+
 }
 
 
