@@ -248,6 +248,7 @@ Candidats.getLyceeToDepartement = function() {
             }
         }
     }
+    res.sort((a, b) => b[5] - a[5]);
     console.log(res);
     return res; // Retourner les résultats
 };
