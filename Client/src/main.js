@@ -81,19 +81,7 @@ C.setupEventListeners = function() {
 
 
 
-    document.addEventListener('DOMContentLoaded', function () {
 
-        const slider = document.getElementById('slider-name');
-
-            slider.addEventListener('input', function(event) {
-                const threshold = event.target.value;
-                document.getElementById('slider').innerText = threshold;
-                GraphView.renderGraph(data);  
-                console.log("slider");
-            });
-           
-        
-    });
 };
 
 C.init();
